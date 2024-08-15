@@ -1,0 +1,45 @@
+# Build local monorepo image
+# docker build --no-cache -t  flowise .
+
+# Run image
+# docker run -d -p 3000:3000 flowise
+
+FROM node:20-alpine
+RUN apk add --update libc6-compat python3 make g++
+# needed for pdfjs-dist
+RUN apk add --no-cache build-base cairo-dev pango-dev
+
+# Install Chromium
+RUN apk add --no-cache chromium
+
+#install PNPM globaly
+RUN npm install -g pnpm
+
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+ENV NODE_OPTIONS=--max-old-space-size=8192
+
+WORKDIR /usr/src
+
+RUN mkdir -p ./packages/server && \
+    mkdir -p ./packages/components && \
+    mkdir -p ./packages/ui
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .eslintrc.js ./
+COPY ./packages/server/package.json ./packages/server/tsconfig.json ./packages/server/babel.config.js ./packages/server/cypress.config.ts ./packages/server/
+COPY ./packages/components/package.json ./packages/components/tsconfig.json ./packages/components/
+COPY ./packages/ui/package.json ./packages/ui/craco.config.js ./packages/ui/vite.config.js ./packages/ui/jsconfig.json ./packages/ui/
+
+# Install all dependencies
+RUN pnpm install
+
+# Copy app source
+COPY . .
+
+# Build packages
+RUN pnpm build
+
+EXPOSE 3000
+
+CMD [ "pnpm", "start" ]
