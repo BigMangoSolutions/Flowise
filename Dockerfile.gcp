@@ -22,13 +22,24 @@ ENV NODE_OPTIONS=--max-old-space-size=8192
 
 WORKDIR /usr/src
 
-USER node
+WORKDIR /usr/src
+
+RUN mkdir -p ./packages/server && \
+    mkdir -p ./packages/components && \
+    mkdir -p ./packages/ui
+
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .eslintrc.js ./
+COPY ./packages/server/package.json ./packages/server/tsconfig.json ./packages/server/babel.config.js ./packages/server/cypress.config.ts ./packages/server/
+COPY ./packages/components/package.json ./packages/components/tsconfig.json ./packages/components/
+COPY ./packages/ui/package.json ./packages/ui/craco.config.js ./packages/ui/vite.config.js ./packages/ui/jsconfig.json ./packages/ui/
+
+# Install all dependencies
+RUN pnpm install
 
 # Copy app source
 COPY . .
 
-RUN pnpm install
-
+# Build packages
 RUN pnpm build
 
 EXPOSE 8080
