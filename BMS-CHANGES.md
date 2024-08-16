@@ -14,3 +14,5 @@ Here we keep track of the changes we do to this fork of Flowise.
 - Added missing dependencies to Components package: uuid, @aws-sdk/client-bedrock-agent-runtime
 - Added missing devDependencies to Components package: @types/uuid
 - Added missing devDependencies to Server package: @types/express-serve-static-core, @types/express
+
+- Added new dependency to Components package: moment-timezone
