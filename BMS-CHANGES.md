@@ -4,6 +4,19 @@ Here we keep track of the changes we do to this fork of Flowise.
 
 ## Build and deploy
 
+To build a local docker image:
+
+```sh
+./scripts/build-local.sh
+```
+
+To Deploy flowise to GCP
+
+```sh
+export ENV="stg" # stg, prd
+./scripts/deploy-flowise.sh
+```
+
 ## Changes
 
 - Made a copy of Dockerfile as Dockerfile.gcp and added Cloud SQL volume
