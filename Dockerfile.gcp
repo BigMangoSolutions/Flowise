@@ -32,6 +32,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .eslintrc.js ./
 COPY ./packages/server/package.json ./packages/server/tsconfig.json ./packages/server/babel.config.js ./packages/server/cypress.config.ts ./packages/server/
 COPY ./packages/components/package.json ./packages/components/tsconfig.json ./packages/components/
 COPY ./packages/ui/package.json ./packages/ui/craco.config.js ./packages/ui/vite.config.js ./packages/ui/jsconfig.json ./packages/ui/
+COPY ./packages/api-documentation/package.json ./packages/api-documentation/tsconfig.json ./packages/api-documentation/
 
 # Install all dependencies
 RUN pnpm install
