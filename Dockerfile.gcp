@@ -26,7 +26,8 @@ WORKDIR /usr/src
 
 RUN mkdir -p ./packages/server && \
     mkdir -p ./packages/components && \
-    mkdir -p ./packages/ui
+    mkdir -p ./packages/ui && \
+    mkdir -p ./packages/api-documentation
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .eslintrc.js ./
 COPY ./packages/server/package.json ./packages/server/tsconfig.json ./packages/server/babel.config.js ./packages/server/cypress.config.ts ./packages/server/
