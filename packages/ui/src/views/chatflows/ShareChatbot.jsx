@@ -56,6 +56,7 @@ const ShareChatbot = ({ isSessionMemory, isAgentCanvas }) => {
 
     const [isPublicChatflow, setChatflowIsPublic] = useState(chatflow.isPublic ?? false)
     const [generateNewSession, setGenerateNewSession] = useState(chatbotConfig?.generateNewSession ?? false)
+    const [renderHTML, setRenderHTML] = useState(chatbotConfig?.renderHTML ?? false)
 
     const [title, setTitle] = useState(chatbotConfig?.title ?? '')
     const [titleAvatarSrc, setTitleAvatarSrc] = useState(chatbotConfig?.titleAvatarSrc ?? '')
@@ -138,6 +139,12 @@ const ShareChatbot = ({ isSessionMemory, isAgentCanvas }) => {
 
         if (isSessionMemory) obj.overrideConfig.generateNewSession = generateNewSession
 
+        if (renderHTML) {
+            obj.renderHTML = true
+        } else {
+            obj.renderHTML = false
+        }
+
         if (chatbotConfig?.starterPrompts) obj.starterPrompts = chatbotConfig.starterPrompts
 
         if (isAgentCanvas) {
@@ -148,6 +155,8 @@ const ShareChatbot = ({ isSessionMemory, isAgentCanvas }) => {
                 obj.showAgentMessages = showAgentMessages
             }
         }
+
+        if (chatbotConfig?.fullFileUpload) obj.fullFileUpload = chatbotConfig?.fullFileUpload
 
         return obj
     }
@@ -311,6 +320,9 @@ const ShareChatbot = ({ isSessionMemory, isAgentCanvas }) => {
                 break
             case 'showAgentMessages':
                 setShowAgentMessages(value)
+                break
+            case 'renderHTML':
+                setRenderHTML(value)
                 break
         }
     }
@@ -479,6 +491,13 @@ const ShareChatbot = ({ isSessionMemory, isAgentCanvas }) => {
             {colorField(textInputTextColor, 'textInputTextColor', 'Text Color')}
             {textField(textInputPlaceholder, 'textInputPlaceholder', 'TextInput Placeholder', 'string', `Type question..`)}
             {colorField(textInputSendButtonColor, 'textInputSendButtonColor', 'TextIntput Send Button Color')}
+
+            <>
+                <Typography variant='h4' sx={{ mb: 1, mt: 2 }}>
+                    Render HTML
+                </Typography>
+                {booleanField(renderHTML, 'renderHTML', 'Render HTML on the chat')}
+            </>
 
             {/*Session Memory Input*/}
             {isSessionMemory && (
