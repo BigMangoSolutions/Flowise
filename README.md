@@ -53,17 +53,17 @@ Download and Install [NodeJS](https://nodejs.org/en/download) >= 18.15.0
 
 1. Build the image locally:
     ```bash
-    docker build --no-cache -t flowise .
+    docker build --no-cache -t bms-flowise .
     ```
 2. Run image:
 
     ```bash
-    docker run -d --name flowise -p 3000:3000 flowise
+    docker run -d --name bms-flowise -p 3000:3000 bms-flowise
     ```
 
 3. Stop image:
     ```bash
-    docker stop flowise
+    docker stop bms-flowise
     ```
 
 ## 👨‍💻 Developers
@@ -109,7 +109,7 @@ Flowise has 3 different modules in a single mono repository.
     ```
 
     <details>
-    <summary>Exit code 134 (JavaScript heap out of memory)</summary>  
+    <summary>Exit code 134 (JavaScript heap out of memory)</summary>
       If you get this error when running the above `build` script, try increasing the Node.js heap size and run the script again:
 
         export NODE_OPTIONS="--max-old-space-size=4096"
